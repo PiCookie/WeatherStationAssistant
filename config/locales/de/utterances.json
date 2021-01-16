@@ -1,0 +1,34 @@
+{
+    "getCompleteWeatherInformationsIntent": [
+        "Gib mir alle Informationen",
+        "Wie ist das Wetter",
+        "Erzähle mir etwas über das Wetter",
+        "Wetter"
+    ],
+    "getTemperatureIntent": [
+        "Wie ist die Temperatur",
+        "Wie {warm|kalt} ist es",
+        "Erzähle mir etwas über die Temperatur",
+        "{Gib mir|Nenn mir} die aktuelle Temperatur",
+        "Temperatur"
+    ],
+    "getHumidityIntent": [
+        "Wie {hoch|} ist die Luftfeuchtigkeit",
+        "Erzähle mir etwas über die Luftfeuchtigkeit",
+        "{Gib mir|Nenn mir} die aktuelle Luftfeuchtigkeit",
+        "Luftfeuchtigkeit"
+    ],
+    "getPressureIntent": [
+        "Wie {hoch|} ist der Luftdruck",
+        "Erzähle mir etwas über den Luftdruck",
+        "{Gib mir|Nenn mir} den aktuellen Luftdruck",
+        "Luftdruck"
+    ],
+    "getBatteryStatusLevelIntent": [
+        "Wie viel Saft hat die Wetterstation noch",
+        "Wie viele Prozent haben die Batterien noch",
+        "Batteriestatus",
+        "Wie voll sind die Batterien noch",
+        "Wie geht es den Batterien"
+    ]
+}

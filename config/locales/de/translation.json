@@ -1,0 +1,28 @@
+{
+    "root": {
+        "cancelGenericIntent": "Ja verpiss dich blos",
+        "helpGenericIntent": "Jo Baby jo als ob ich dir Otto Hilfe anbiete",
+        "stopGenericIntent": "Ja okay, dann geh doch endlich"
+    },
+    "mainState": {
+        "invokeGenericIntent": {
+            "alexa": "Guten Tag Patricia und Lukas, was kann ich für euch tun"
+        },
+        "getCompleteWeatherInformationsIntent": [
+            "{{temperature}} Grad Celsius, {{humidity}} Prozent Luftfeuchtigkeit, {{pressure}} millibar Luftdruck und {{batteryLevel}} Prozent Batteriestatus"
+        ],
+        "getTemperatureIntent": [
+            "Deine Wetterstation misst einen Wert von {{temperature}} Grad Celsius."
+        ],
+        "getHumidityIntent": [
+            "Die Luftfeuchtigkeit beträgt {{humidity}} Prozent"
+        ],
+        "getPressureIntent": [
+            "Der Luftdruck liegt bei {{pressure}} millibar"
+        ],
+        "getBatteryStatusLevelIntent": [
+            "Der Batteriestatus beträgt {{batteryLevel}} Prozent"
+        ]
+    }
+    
+}
