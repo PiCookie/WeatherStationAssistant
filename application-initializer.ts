@@ -1,6 +1,7 @@
 import { AssistantJSApplicationInitializer, AssistantJSSetup, FilterSetup, GeneratorApplication, ServerApplication, StateMachineSetup } from "assistant-source";
 import { descriptor as alexaDescriptor } from "assistant-alexa";
 import componentConfiguration from "./config/components";
+import * as moment from "moment";
 
 /**
  * This is AssistantJS's main entrance into your application. With the help of this ApplicationInitializer class, you help AssistantJS
@@ -26,6 +27,9 @@ export class ApplicationInitializer implements AssistantJSApplicationInitializer
     if (!localAssistantJs.allInternalComponentsAreRegistered()) {
       localAssistantJs.registerInternalComponents();
     }
+
+    // Configure moment.js
+    moment.locale("de");
 
     // Register all additional AssistantJS components - currently none
     localAssistantJs.registerComponent(alexaDescriptor);

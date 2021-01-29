@@ -19,14 +19,13 @@ export class ApplicationState extends BaseState<MergedAnswerTypes, MergedHandler
    * User wants to abort, meaning - as a default - end the application.
    */
   public cancelGenericIntent() {
-    this.prompt(this.t());
+    this.endSessionWith(this.t());
   }
 
   /**
    * User wants to stop
    */
   public stopGenericIntent() {
-    //TODO:
-    this.prompt(this.t());
+    this.endSessionWith(this.t());
   }
 }

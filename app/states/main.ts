@@ -1,8 +1,8 @@
 import { injectionNames, Transitionable } from "assistant-source";
 import { inject, injectable } from "inversify";
-
 import { ApplicationState } from "./application";
 import { MergedSetupSet } from "../../config/handler";
+import * as moment from "moment";
 
 /**
  * This is your MainState.
@@ -10,9 +10,13 @@ import { MergedSetupSet } from "../../config/handler";
  * Therefore all intent methods implemented here can be called directly from the starting point.
  */
 
-const apiURL: string = "http://192.168.178.47:8000/api";
-const defaultDeviceName: string = "Arduino";
+const axios = require('axios');
 
+// EDIT
+const apiURL: string = "http://192.168.178.57:8000/api";
+const defaultDeviceName: string = "Arduino";
+const firstPerson: string = "Patricia";
+const secondPerson: string = "Lukas";
 @injectable()
 export class MainState extends ApplicationState {
   constructor(@inject(injectionNames.current.stateSetupSet) stateSetupSet: MergedSetupSet) {
@@ -24,7 +28,9 @@ export class MainState extends ApplicationState {
    * It is called as soon as the application is launched, e. g. if user says "launch xxxxx".
    */
   public async invokeGenericIntent(machine: Transitionable) {
-    this.prompt(this.t());
+    const greetings: string = transformHourToGreetingsOutput(moment().hour());
+
+    this.prompt(this.t({greetings, firstPerson, secondPerson}));
   }
 
   /**
@@ -34,7 +40,7 @@ export class MainState extends ApplicationState {
   public async getCompleteWeatherInformationsIntent(machine: Transitionable) {
       // send get request to web server to get temperature, humidity, pressure and batteryLevel value
       const [temperature, humidity, pressure, batteryLevel] = await Promise.all([sendGetTemperatureRequest(), sendGetHumidityRequest(), sendGetPressureRequest(), sendGetBatteryLevelRequest()]);
-      this.prompt(this.t({temperature, humidity, pressure, batteryLevel}));
+      this.responseHandler.endSessionWith(await this.t({temperature, humidity, pressure, batteryLevel}));
   }
 
   /**
@@ -44,7 +50,8 @@ export class MainState extends ApplicationState {
   public async getTemperatureIntent(machine: Transitionable) {
     // send get request to web server to get temperature value
     const temperature = await Promise.resolve(sendGetTemperatureRequest());
-    this.prompt(this.t({temperature}));
+    const intervall: string = transformTemperaturToIntervallOutput(temperature);
+    this.responseHandler.endSessionWith(await this.t({intervall, temperature}));
   }
 
   /**
@@ -54,7 +61,7 @@ export class MainState extends ApplicationState {
   public async getHumidityIntent(machine: Transitionable) {
     // send get request to web server to get humidity value
     const humidity = await Promise.resolve(sendGetHumidityRequest());
-    this.prompt(this.t({humidity}));
+    this.responseHandler.endSessionWith(await this.t({humidity}));
   }
 
   /**
@@ -64,7 +71,7 @@ export class MainState extends ApplicationState {
   public async getPressureIntent(machine: Transitionable) {
       // send get request to web server to get pressure value
       const pressure = await Promise.resolve(sendGetPressureRequest());
-      this.prompt(this.t({pressure}));
+      this.responseHandler.endSessionWith(await this.t({pressure}));
   }
 
   /**
@@ -74,7 +81,65 @@ export class MainState extends ApplicationState {
   public async getBatteryStatusLevelIntent(machine: Transitionable) {
       // send get request to web server to get battery level
       const batteryLevel = await Promise.resolve(sendGetBatteryLevelRequest());
-      this.prompt(this.t({batteryLevel}));
+      const intervall: string = transformBatteryLevelToIntervallOutput(batteryLevel);
+      this.responseHandler.endSessionWith(await this.t({intervall, batteryLevel}));
+  }
+}
+
+/**
+ * 
+ * @param hour 
+ */
+function transformHourToGreetingsOutput(hour: number): string {
+  if (hour <= 9) { 
+    return "Guten Morgen";
+  } 
+  else if (hour <= 17) { 
+    return "Guten Tag";
+  } 
+  else { 
+    return "Guten Abend";
+  }
+}
+
+/**
+ * 
+ * @param temperature 
+ */
+function transformTemperaturToIntervallOutput(temperature: number): string {
+  if (temperature <= 6) { 
+    return "Arschkalt.";
+  } 
+  else if (temperature <= 13) { 
+    return "Brrr, ganz schön kalt.";
+  } 
+  else if (temperature <= 20) { 
+    return "Es ist angenehm.";
+  } 
+  else if (temperature <= 27) { 
+    return "Puh, ganz schön warm.";
+  } 
+  else { 
+    return "Tierisch heiß.";
+  }
+}
+
+/**
+ * 
+ * @param batteryLevel 
+ */
+function transformBatteryLevelToIntervallOutput(batteryLevel: number): string {
+  if (batteryLevel <= 25) { 
+    return "Oh oh, bald müssen deine Batterien gewechselt werden.";
+  } 
+  else if (batteryLevel <= 50) { 
+    return "Die Leistung deiner Batterien neigen sich dem Ende zu.";
+  } 
+  else if (batteryLevel <= 75) { 
+    return "Sieht noch alles gut aus.";
+  } 
+  else { 
+    return "Du hast die doch gerade erst gewechselt.";
   }
 }
 
@@ -82,13 +147,12 @@ export class MainState extends ApplicationState {
  * 
  */
 async function sendGetTemperatureRequest() {
-  const axios = require('axios');
   const url = `${apiURL}/temperature?device=${defaultDeviceName}`;
   try {
     const response = await axios.get(url);
     return response.data.data.temperature;
   } catch(error) {
-    console.log("error: ", error);
+    console.log("sendGetTemperatureRequest Error: ", error);
   }
 }
 
@@ -96,13 +160,12 @@ async function sendGetTemperatureRequest() {
  * 
  */
 async function sendGetHumidityRequest() {
-  const axios = require('axios');
   const url = `${apiURL}/humidity?device=${defaultDeviceName}`;
   try {
     const response = await axios.get(url);
     return response.data.data.humidity;
   } catch(error) {
-    console.log("error: ", error);
+    console.log("sendGetHumidityRequest Error: ", error);
   }
 }
 
@@ -111,13 +174,12 @@ async function sendGetHumidityRequest() {
  * 
  */
 async function sendGetPressureRequest() {
-  const axios = require('axios');
   const url = `${apiURL}/pressure?device=${defaultDeviceName}`;
   try {
     const response = await axios.get(url);
     return response.data.data.pressure;
   } catch(error) {
-    console.log("error: ", error);
+    console.log("sendGetPressureRequest Error: ", error);
   }
 }
 
@@ -125,12 +187,11 @@ async function sendGetPressureRequest() {
  * 
  */
 async function sendGetBatteryLevelRequest() {
-  const axios = require('axios');
   const url = `${apiURL}/batteryLevel?device=${defaultDeviceName}`;
   try {
     const response = await axios.get(url);
     return response.data.data.batteryLevel;
   } catch(error) {
-    console.log("error: ", error);
+    console.log("sendGetBatteryLevelRequest Error: ", error);
   }
 }

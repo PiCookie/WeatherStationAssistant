@@ -1,28 +1,35 @@
 {
     "root": {
-        "cancelGenericIntent": "Ja verpiss dich blos",
-        "helpGenericIntent": "Jo Baby jo als ob ich dir Otto Hilfe anbiete",
-        "stopGenericIntent": "Ja okay, dann geh doch endlich"
+        "cancelGenericIntent": ["Bis bald.", "Bis dann.", "Bis zum nächsten Mal!"],
+        "helpGenericIntent": ["Kein Problem, ich helfe dir gerne! Du kannst nach allen Wetterinformationen fragen oder dich nach einem einzelnen Wert erkundigen."],
+        "stopGenericIntent": ["Bis bald.", "Bis dann.", "Bis zum nächsten Mal!"],
+        "unhandledGenericIntent": ["{Entschuldigung, das|Das} habe ich nicht verstanden. Könntest Du das wiederholen?"]
     },
     "mainState": {
         "invokeGenericIntent": {
-            "alexa": "Guten Tag Patricia und Lukas, was kann ich für euch tun"
+            "alexa": "{{greetings}} {{firstPerson}} und {{secondPerson}}, was kann ich für euch tun?"
         },
         "getCompleteWeatherInformationsIntent": [
-            "{{temperature}} Grad Celsius, {{humidity}} Prozent Luftfeuchtigkeit, {{pressure}} millibar Luftdruck und {{batteryLevel}} Prozent Batteriestatus"
+            "Ich messe eine Temperatur von {{temperature}} Grad Celsius, {{humidity}} Prozent Luftfeuchtigkeit, {{pressure}} millibar Luftdruck. Die Batterien haben noch {{batteryLevel}} Prozent Energie."
         ],
         "getTemperatureIntent": [
-            "Deine Wetterstation misst einen Wert von {{temperature}} Grad Celsius."
+            "{{intervall}} Deine Wetterstation misst einen Wert von {{temperature}} Grad Celsius.",
+            "{{intervall}} Ich habe einen Wert von {{temperature}} Grad Celsius gemessen.",
+            "{{intervall}} Aktuell messe ich einen Wert von {{temperature}} Grad Celsius."
         ],
         "getHumidityIntent": [
-            "Die Luftfeuchtigkeit beträgt {{humidity}} Prozent"
+            "Die Luftfeuchtigkeit beträgt {{humidity}} Prozent.",
+            "Ich habe einen Wert von {{humidity}} Prozent Luftfeuchtigkeit gemessen.",
+            "Aktuell messe ich einen Wert von {{humidity}} Prozent Luftfeuchtigkeit."
         ],
         "getPressureIntent": [
-            "Der Luftdruck liegt bei {{pressure}} millibar"
+            "Der Luftdruck liegt bei {{pressure}} millibar.",
+            "Ich habe einen Luftdruck von {{pressure}} millibar gemessen.",
+            "Aktuell liegt der Luftdruck bei einem Wert von {{pressure}} millibar."
         ],
         "getBatteryStatusLevelIntent": [
-            "Der Batteriestatus beträgt {{batteryLevel}} Prozent"
+            "{{intervall}} Der Batteriestatus {beträgt|liegt bei} {{batteryLevel}} Prozent.",
+            "{{intervall}} Deine Batterien haben noch {{batteryLevel}} Prozent Energie."
         ]
     }
-    
 }
