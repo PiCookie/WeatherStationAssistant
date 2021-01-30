@@ -10,7 +10,8 @@
             "alexa": "{{greetings}} {{firstPerson}} und {{secondPerson}}, was kann ich für euch tun?"
         },
         "getCompleteWeatherInformationsIntent": [
-            "Ich messe eine Temperatur von {{temperature}} Grad Celsius, {{humidity}} Prozent Luftfeuchtigkeit, {{pressure}} millibar Luftdruck. Die Batterien haben noch {{batteryLevel}} Prozent Energie."
+            "Ich messe eine Temperatur von {{temperature}} Grad Celsius, {{humidity}} Prozent Luftfeuchtigkeit und {{pressure}} millibar Luftdruck. Die Batterien haben noch {{batteryLevel}} Prozent Energie.",
+            "Die Temperatur beträgt {{temperature}} Grad Celsius, die Luftfeuchtigkeit beläuft sich auf {{humidity}} Prozent und der Luftdruck hat einen Wert von {{pressure}} millibar. Der Batteriestatus liegt bei {{batteryLevel}} Prozent."
         ],
         "getTemperatureIntent": [
             "{{intervall}} Deine Wetterstation misst einen Wert von {{temperature}} Grad Celsius.",

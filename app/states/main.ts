@@ -39,7 +39,10 @@ export class MainState extends ApplicationState {
    */
   public async getCompleteWeatherInformationsIntent(machine: Transitionable) {
       // send get request to web server to get temperature, humidity, pressure and batteryLevel value
-      const [temperature, humidity, pressure, batteryLevel] = await Promise.all([sendGetTemperatureRequest(), sendGetHumidityRequest(), sendGetPressureRequest(), sendGetBatteryLevelRequest()]);
+      let [temperature, humidity, pressure, batteryLevel] = await Promise.all([sendGetTemperatureRequest(), sendGetHumidityRequest(), sendGetPressureRequest(), sendGetBatteryLevelRequest()]);
+      temperature = `${temperature}`.replace('.', ',');
+      humidity = `${humidity}`.replace('.', ',');
+      pressure = `${pressure}`.replace('.', ',');
       this.responseHandler.endSessionWith(await this.t({temperature, humidity, pressure, batteryLevel}));
   }
 
@@ -49,8 +52,9 @@ export class MainState extends ApplicationState {
    */
   public async getTemperatureIntent(machine: Transitionable) {
     // send get request to web server to get temperature value
-    const temperature = await Promise.resolve(sendGetTemperatureRequest());
+    let temperature = await Promise.resolve(sendGetTemperatureRequest());
     const intervall: string = transformTemperaturToIntervallOutput(temperature);
+    temperature = `${temperature}`.replace('.', ',');
     this.responseHandler.endSessionWith(await this.t({intervall, temperature}));
   }
 
@@ -60,7 +64,8 @@ export class MainState extends ApplicationState {
    */
   public async getHumidityIntent(machine: Transitionable) {
     // send get request to web server to get humidity value
-    const humidity = await Promise.resolve(sendGetHumidityRequest());
+    let humidity = await Promise.resolve(sendGetHumidityRequest());
+    humidity = `${humidity}`.replace('.', ',');
     this.responseHandler.endSessionWith(await this.t({humidity}));
   }
 
@@ -70,7 +75,8 @@ export class MainState extends ApplicationState {
    */
   public async getPressureIntent(machine: Transitionable) {
       // send get request to web server to get pressure value
-      const pressure = await Promise.resolve(sendGetPressureRequest());
+      let pressure = await Promise.resolve(sendGetPressureRequest());
+      pressure = `${pressure}`.replace('.', ',');
       this.responseHandler.endSessionWith(await this.t({pressure}));
   }
 
