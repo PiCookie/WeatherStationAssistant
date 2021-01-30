@@ -29,7 +29,6 @@ export class MainState extends ApplicationState {
    */
   public async invokeGenericIntent(machine: Transitionable) {
     const greetings: string = transformHourToGreetingsOutput(moment().hour());
-
     this.prompt(this.t({greetings, firstPerson, secondPerson}));
   }
 
