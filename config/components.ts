@@ -34,7 +34,7 @@ const configuration: AssistantJSConfiguration & AlexaConfigurationAttribute= {
       applicationID: "amzn1.ask.skill.40fafc9c-252e-4908-9e51-d74fdf234dc8",
       route: "/alexa",
       useVerifier: false,
-      invocationName: "wetter station",
+      invocationName: "wetter frosch",
     },
   
   // There are also other settings available. Just have a look at the "AssistantJSConfiguration" interface.
