@@ -13,7 +13,7 @@ import * as moment from "moment";
 const axios = require('axios');
 
 // EDIT
-const apiURL: string = "http://192.168.178.57:8000/api";
+const apiURL: string = "http://192.168.178.202:8000/api";
 const defaultDeviceName: string = "Arduino";
 const firstPerson: string = "Patricia";
 const secondPerson: string = "Lukas";
