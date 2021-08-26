@@ -11,7 +11,7 @@ interface EnvironmentVariables {
 }
 
 const ENVIRONMENT_DEFAULTS: EnvironmentVariables = {
-    REDIS_DATABASE: "wetterfrosch",
+    REDIS_DATABASE: "5",
     REDIS_HOST: "127.0.0.1",
     REDIS_PASSWORD: undefined,
     REDIS_SOCKET: undefined,
