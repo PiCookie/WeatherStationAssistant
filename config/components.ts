@@ -1,5 +1,6 @@
 import { AssistantJSConfiguration } from "assistant-source";
 import { AlexaConfigurationAttribute } from "assistant-alexa";
+import { getRedisClient } from "./redis";
 
 /*
  * In AssistantJS, every component may have it's own configuration settings. For example,
@@ -28,14 +29,24 @@ const configuration: AssistantJSConfiguration & AlexaConfigurationAttribute= {
       debug: true
     }
   },
-
-    // Alexa Configuration 
-    alexa: {
-      applicationID: "amzn1.ask.skill.40fafc9c-252e-4908-9e51-d74fdf234dc8",
-      route: "/alexa",
-      useVerifier: false,
-      invocationName: "wetter frosch",
+  
+  "core:services": {
+    sessionStorage: {
+      factoryName: "redis",
+      configuration: {
+        redisClient: getRedisClient(),
+        maxLifeTime: 3600,
+      },
     },
+  },
+    
+  // Alexa Configuration 
+  alexa: {
+    applicationID: "amzn1.ask.skill.40fafc9c-252e-4908-9e51-d74fdf234dc8",
+    route: "/alexa",
+    useVerifier: false,
+    invocationName: "wetter frosch",
+  },
   
   // There are also other settings available. Just have a look at the "AssistantJSConfiguration" interface.
 };
